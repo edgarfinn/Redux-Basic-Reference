@@ -52,8 +52,8 @@ React vs Redux
     ```
 
 
-- #### Containers (often also referred to as 'smart components'):
-    A container is a component that has access to the state that is produced by Redux.
+- #### Containers:
+    A container is a smart component that has access to the state that is produced by Redux.
 
     React and Redux are two separate libraries, and its only through a third library called [React-Redux](https://github.com/reactjs/react-redux) that we can combine the two, thereby creating a react component, which is aware of the state stored in Redux.
 
@@ -69,12 +69,12 @@ HOW ?
 ### Connecting React to Redux:
 #### Ingredients:
 - ```import {connect} from 'react-redux'```
-- A container / smart / class-based component, which makes use of the state via ```this.props```.
+- A smart / class-based component, which makes use of the state via ```this.props```.
 - A [state function](#StateFunction), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
 - Finally - a call to **connect**
-  - ```export default connect(stateFunction)(container)```
+  - ```export default connect(stateFunction)(mySmartComponent)```
 
-The redux (state) and react (views) libraries are disconnected and indepenedent of one another, and it is only through **react-redux** that they become connected and collaborative.
+The redux (state) and react (views) libraries are disconnected and independent of one another, and it is only through **react-redux** that they become connected and collaborative.
 
 A **container** is a normal react component that gets bonded to the applications state via the above process.
 
@@ -117,13 +117,12 @@ const mapStateToProps = (state) => {
   };
 }
 
+
 // here, the connect function uses the mapStateToProps function
-// to bind the state object (returned by the your reducers)
+// to bond the state object (returned by the your reducers)
 // to the BookList component's props
-
-// the returned value here is your **container**
 export default connect(mapStateToProps)(BookList)
-
+// the returned value here is your **container**
 
 ```
 
