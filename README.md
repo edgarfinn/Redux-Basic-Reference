@@ -43,6 +43,8 @@ React vs Redux
     import BooksReducer from './reducer_books';
 
     const rootReducer = combineReducers({
+      // once mapped to a components props using connect,
+      // this key will be accessible within a containers props
       books: BooksReducer
     });
 
@@ -80,6 +82,48 @@ The container is created by taking a class component, and bonding is to the apps
 
 ### StateFunction
 ```js
+// containers/book-list.js
+import React, {Component} from 'react';
+// connect from react-redux is used together with mapStateToProps
+// to bond the state returned from
+import { connect } from 'react-redux';
+
+class BookList extends Component {
+
+  renderList() {
+    return this.props.books.map((book) => {
+      return (
+        <li key={book.title} className="list-group-item">{book.title}</li>
+      )
+    })
+  }
+
+  render() {
+    return (
+      <ul className="list-group col-sm-4">
+        {this.renderList()}
+      </ul>
+    )
+  }
+}
+
+// whatever is returned from this function
+// will show as props in BookList
+const mapStateToProps = (state) => {
+  return {
+    // whatever key being referenced here
+     // must be defined as as a key in the combineReducers index module
+    books: state.books
+  };
+}
+
+// here, the connect function uses the mapStateToProps function
+// to bind the state object (returned by the your reducers)
+// to the BookList component's props
+
+// the returned value here is your **container**
+export default connect(mapStateToProps)(BookList)
+
 
 ```
 
