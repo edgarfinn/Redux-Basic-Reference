@@ -21,3 +21,5 @@ Redux is a predictable state container for Javascript Apps. In other words, its 
     React and Redux are two separate libraries, and its only through a third library called [React-Redux](https://github.com/reactjs/react-redux) that we can combine the two, thereby creating a react component, which is aware of the state stored in Redux.
 
     You can have multiple containers in one app, but you should only ever make a component a container when you need it to concern itself with a piece of state.
+
+    Redux architecture revolves around a strict unidirectional data flow. Downwards data flow is therefore a popular principal, in which only the parent-most component in an application is responsible for fetching data, which can then be passed in a single direction downwards, to its child components.
