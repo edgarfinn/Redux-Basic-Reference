@@ -22,3 +22,7 @@ Redux is a predictable state container for Javascript Apps. In other words, its 
     You can have multiple containers in one app, but you should only ever make a component a container when you need it to concern itself with a piece of state.
 
     Redux architecture revolves around a strict unidirectional data flow. Downwards data flow is therefore a popular principal, in which only the parent-most component in an application is responsible for fetching data, which can then be passed in a single direction downwards, to its child components.
+
+    In light of the downwards data flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container / smart component. This doesn't always mean the index or app.js module, you may want various child components to be containers too.
+
+    
