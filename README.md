@@ -1,5 +1,4 @@
-# Redux-Basic-Reference
-Redux Basic Reference
+# Redux-Basic-Reference (for React)
 
 WHAT ?
 ---
