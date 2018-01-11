@@ -4,6 +4,11 @@ WHAT ?
 ---
 Redux is a predictable state container for Javascript Apps. In other words, its a collection of all the data that describes the application.
 
+React vs Redux
+
+- Redux serves to construct the applications state. Whereas React provides views to display and present that state.
+
+
 ## Key terminology:
 - #### State:
 
@@ -13,6 +18,37 @@ Redux is a predictable state container for Javascript Apps. In other words, its 
 
 - #### Reducers:
     A reducer is a function that returns a piece of the applications state. If there are many pieces of state, there can be many different reducers.
+
+    ```js
+    // reducers/reducer_books.js
+
+    export default function() {
+      return [
+        {title: 'Javascript the good parts'},
+        {title: 'Harry Potter'},
+        {title: 'Eloquent Ruby'},
+        {title: 'The Dark Tower'}
+      ]
+    };
+
+    ```
+    Since its likely that you'll have several different bits of state, you'll likely have several reducers, so in order to combine them, you'll want to use an index page that merges them all together like so:
+
+    ```js
+    // reducers/index.js
+
+    // here, BooksReducer returns the array of book objects from the above example.
+
+    import { combineReducers } from 'redux';
+    import BooksReducer from './reducer_books';
+
+    const rootReducer = combineReducers({
+      books: BooksReducer
+    });
+
+    export default rootReducer;
+    ```
+
 
 - #### Containers (often also referred to as 'smart components'):
     A container is a component that has access to the state that is produced by Redux.
@@ -25,4 +61,31 @@ Redux is a predictable state container for Javascript Apps. In other words, its 
 
     In light of the downwards data flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container / smart component. This doesn't always mean the index or app.js module, you may want various child components to be containers too.
 
-    
+HOW ?
+---
+
+### Connecting React to Redux:
+#### Ingredients:
+- ```import {connect} from 'react-redux'```
+- A container / smart / class-based component, which makes use of the state via ```this.props```.
+- A [state function](#StateFunction), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
+- Finally - a call to **connect**
+  - ```export default connect(stateFunction)(container)```
+
+The redux (state) and react (views) libraries are disconnected and indepenedent of one another, and it is only through **react-redux** that they become connected and collaborative.
+
+A **container** is a normal react component that gets bonded to the applications state via the above process.
+
+The container is created by taking a class component, and bonding is to the apps state using the state function together with the ```connect``` function imported from 'react-redux' module.
+
+### StateFunction
+```js
+
+```
+
+Actions and Action Creators
+---
+
+Actions and Action Creators are used for changing state.
+
+An action creator is a function that returns an object (which is the react). That action object contains a 'type' property, which describes the action being triggered.
