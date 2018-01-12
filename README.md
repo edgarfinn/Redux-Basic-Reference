@@ -91,6 +91,7 @@ import { connect } from 'react-redux';
 class BookList extends Component {
 
   renderList() {
+    // redux state is accessed using 'this.props'
     return this.props.books.map((book) => {
       return (
         <li key={book.title} className="list-group-item">{book.title}</li>
@@ -126,9 +127,48 @@ export default connect(mapStateToProps)(BookList)
 
 ```
 
+#### IMPORTANT:
+
+- Redux state is accessed within a container using ```this.props...```
+
+Similarly to React smart components, whenever our application state changes, our container will re-render, and cause all child components to re-render also.
+
 Actions and Action Creators
 ---
 
 Actions and Action Creators are used for changing state.
 
-An action creator is a function that returns an object (which is the react). That action object contains a 'type' property, which describes the action being triggered.
+An action creator is a function that returns an object (which is the action). That action object contains a 'type' property, which describes the action being triggered, as well as any specific data relating to the action:
+
+```js
+// action creator, triggered by user events.
+function() {
+  return {
+    type: 'BOOK_SELECTED',
+    book: {title: 'Harry Potter'}
+  }
+}
+```
+
+The action object, returned by the action creator is passed through all reducers:
+
+```js
+// action object
+{
+  type: 'BOOK_SELECTED',
+  book: {title: 'Harry Potter'}
+}
+```
+If your reducers are be written with a switch statement, you can determin the state that is returned, based on the type of any action it is passed.
+
+```js
+
+switch(action) {
+  case BOOK_SELECTED:
+  return action.book
+  default:
+  // ignore this action and just return the currentState unchanged
+  return currentState  
+}
+
+```
