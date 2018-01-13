@@ -189,3 +189,10 @@ switch(action) {
 }
 
 ```
+
+In order to trigger actions from user interactions or other ongoing events, you need to import the action, and map it to your containers props (similarly to mapping state to props), using redux's ```bindActionCreators``` function.
+
+```js
+import { selectBook } from '../actions/index';
+import { bindActionCreators } from 'redux';
+```
