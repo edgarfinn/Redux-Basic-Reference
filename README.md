@@ -176,7 +176,21 @@ function() {
   book: {title: 'Harry Potter'}
 }
 ```
-The action object, returned by the action creator is passed through all reducers. Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
+The action object, returned by the action creator is passed through all reducers, which update the state according to the nature and contents of the action.
+
+#### Action data flow:
+
+- 1) User event triggers an action creator function, possibly also passing info about the data / item on which the event occurred (ie the book being selected).
+
+- 2) The action creator will produce an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, which would be used to provide further context of the action (again, such as the book being selected).
+
+- 3) The action is automatically sent to all reducers, which either respond to the action with an updated state object, or ignore the action, returning the current state, un-mutated.
+
+- 4) All reducers process the action, and return a new state, assembled from all reducers. The new state then notifies containers of any changes.
+
+- 5) Any containers with updated state then re-render, adapting to the new state.
+
+Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
 
 ```js
 
@@ -192,7 +206,11 @@ switch(action) {
 
 In order to trigger actions from user interactions or other ongoing events, you need to import the action, and map it to your containers props (similarly to mapping state to props), using redux's ```bindActionCreators``` function.
 
+This ```bindActionCreators``` function is used to make sure the action flows through all the application's reducers.
+
 ```js
 import { selectBook } from '../actions/index';
 import { bindActionCreators } from 'redux';
 ```
+
+Once imported, you then need to write a mapping function, that takes an object
