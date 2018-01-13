@@ -168,7 +168,6 @@ function() {
 }
 ```
 
-The action object, returned by the action creator is passed through all reducers:
 
 ```js
 // action object
@@ -177,7 +176,7 @@ The action object, returned by the action creator is passed through all reducers
   book: {title: 'Harry Potter'}
 }
 ```
-If your reducers are be written with a switch statement, you can determin the state that is returned, based on the type of any action it is passed.
+The action object, returned by the action creator is passed through all reducers. Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
 
 ```js
 
