@@ -152,7 +152,7 @@ Similarly to React smart components, whenever our application state changes, our
 Actions and Action Creators
 ---
 
-An Action, is an object that describes a user interaction that should change the state. For example, clicking on a book item, in a list of books, thereby selected the book clicked on.
+An Action, is an object that describes a user interaction that should change the state. For example, selecting a book from a list by clicking on it. Here, the user interaction (clicking a book item) triggers the action (selecting a book).
 
 Actions and Action Creators are used for changing state.
 
