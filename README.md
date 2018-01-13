@@ -6,7 +6,8 @@ Redux is a predictable state container for Javascript Apps. In other words, its 
 
 React vs Redux
 
-- Redux serves to construct the applications state. Whereas React provides views to display and present that state.
+- Redux serves to construct the applications state.
+- Whereas React provides views to display and present that state.
 
 
 ## Key terminology:
@@ -61,7 +62,7 @@ React vs Redux
 
     Redux architecture revolves around a strict unidirectional data flow. Downwards data flow is therefore a popular principal, in which only the parent-most component in an application is responsible for fetching data, which can then be passed in a single direction downwards, to its child components.
 
-    In light of the downwards data flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container / smart component. This doesn't always mean the index or app.js module, you may want various child components to be containers too.
+    In light of the downwards data flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container / smart component. This doesn't always mean the index or app.js module, you may want various child components to be containers as well / instead.
 
 HOW ?
 ---
@@ -70,7 +71,7 @@ HOW ?
 #### Ingredients:
 - ```import {connect} from 'react-redux'```
 - A smart / class-based component, which makes use of the state via ```this.props```.
-- A [state function](#StateFunction), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
+- A [state function](#statefunction), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
 - Finally - a call to **connect**
   - ```export default connect(stateFunction)(mySmartComponent)```
 
@@ -80,7 +81,7 @@ A **container** is a normal react component that gets bonded to the applications
 
 The container is created by taking a class component, and bonding is to the apps state using the state function together with the ```connect``` function imported from 'react-redux' module.
 
-### StateFunction
+#### StateFunction:
 ```js
 // containers/book-list.js
 import React, {Component} from 'react';
@@ -135,6 +136,8 @@ Similarly to React smart components, whenever our application state changes, our
 
 Actions and Action Creators
 ---
+
+An Action, is an object that describes a user interaction that should change the state. For example, clicking on a book item, in a list of books, thereby selected the book clicked on.
 
 Actions and Action Creators are used for changing state.
 
