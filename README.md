@@ -71,7 +71,7 @@ HOW ?
 #### Ingredients:
 - ```import {connect} from 'react-redux'```
 - A smart / class-based component, which makes use of the state via ```this.props```.
-- A [state function](#statefunction), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
+- A [state mapping function](#state-mapping-function), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
 - Finally - a call to **connect**
   - ```export default connect(stateFunction)(mySmartComponent)```
 
@@ -79,10 +79,10 @@ The redux (state) and react (views) libraries are disconnected and independent o
 
 A **container** is a normal react component that gets bonded to the applications state via the above process.
 
-The container is created by taking a class component, and bonding is to the apps state using the state function together with the ```connect``` function imported from 'react-redux' module.
+The container is created by taking a class component, and bonding is to the apps state using the state mapping function together with the ```connect``` function imported from 'react-redux' module.
 
-#### StateFunction:
-A state function is written to take ```state``` as an argument, and map a particular value from it to a relevant to the value of a key in a new object which is returned.
+#### State Mapping Function:
+A state mapping function is written to take ```state``` as an argument, and map a particular value from it to a relevant to the value of a key in a new object which is returned.
 ```js
 
 // receives state as an argument
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
   };
 }
 ```
-The state function is used in conjunction with the connect function to pass the state object to the container's props.
+The state-mapping function is used in conjunction with the connect function to pass the state object to the container's props.
 
 ```js
 // containers/book-list.js
@@ -124,8 +124,8 @@ class BookList extends Component {
   }
 }
 
-// whatever is returned from this function
-// will show as props in BookList
+// STATE-MAPPING FUNCTION
+// whatever is returned from this function will show as props in BookList
 const mapStateToProps = (state) => {
   return {
     // whatever key being referenced here
