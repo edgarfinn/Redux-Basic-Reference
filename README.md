@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
   };
 }
 ```
-The state function is used in conjunction with the  
+The state function is used in conjunction with the connect function to pass the state object to the container's props.
 
 ```js
 // containers/book-list.js
