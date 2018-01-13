@@ -125,7 +125,7 @@ class BookList extends Component {
 }
 
 // STATE-MAPPING FUNCTION
-// whatever is returned from this function will show as props in BookList
+// whatever is returned from this function will show as props in the BookList container
 const mapStateToProps = (state) => {
   return {
     // whatever key being referenced here
