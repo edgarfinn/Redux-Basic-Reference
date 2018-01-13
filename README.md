@@ -182,7 +182,7 @@ The action object, returned by the action creator is passed through all reducers
 
 - 1) User event triggers an action creator function, possibly also passing info about the data / item on which the event occurred (ie the book being selected).
 
-- 2) The action creator will produce an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, which would be used to provide further context of the action (again, such as the book being selected).
+- 2) The action creator will dispatch an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, which would be used to provide further context of the action (such as the book being selected).
 
 - 3) The action is automatically sent to all reducers, which either respond to the action with an updated state object, or ignore the action, returning the current state, un-mutated.
 
@@ -191,6 +191,7 @@ The action object, returned by the action creator is passed through all reducers
 - 5) Any containers with updated state then re-render, adapting to the new state.
 
 Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
+
 
 ```js
 
