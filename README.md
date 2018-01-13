@@ -82,6 +82,21 @@ A **container** is a normal react component that gets bonded to the applications
 The container is created by taking a class component, and bonding is to the apps state using the state function together with the ```connect``` function imported from 'react-redux' module.
 
 #### StateFunction:
+A state function is written to take ```state``` as an argument, and map a particular value from it to a relevant to the value of a key in a new object which is returned.
+```js
+
+// receives state as an argument
+const mapStateToProps = (state) => {
+  // returns a new object...
+  return {
+    // ...which has a particular value from state
+    // assigned to a sensible key reference
+    books: state.books
+  };
+}
+```
+The state function is used in conjunction with the  
+
 ```js
 // containers/book-list.js
 import React, {Component} from 'react';
