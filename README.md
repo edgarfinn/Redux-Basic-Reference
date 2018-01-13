@@ -184,7 +184,7 @@ switch(action) {
   case BOOK_SELECTED:
   return action.book
   default:
-  // ignore this action and just return the currentState unchanged
+  // ignore this action and just return the currentState (unchanged)
   return currentState  
 }
 
