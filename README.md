@@ -214,3 +214,52 @@ import { bindActionCreators } from 'redux';
 ```
 
 Once imported, you then need to write a mapping function, that takes an object
+
+WRITE NOTES ON Upgrading a smart component to a container, and the action reducers data flow setup, using:
+
+```js
+mapStateToProps
+```
+```js
+mapDispatchToProps
+```
+```js
+connected
+```
+
+```js
+bindActionCreators
+```
+
+- Middleware
+
+  Redux-Promise package takes promisified ajax responses, and intervenes between the action and the reducer. If the action payload is a promise, it converts it into the response data value, and passes that data on to the reducer instead of the promise.
+
+### Avoid State Mutations in Reducers
+Never mutate state in your reducers, instead, return a completely new piece of state.
+
+```js
+// BAD :(
+export default function(state = [], action) {
+
+  switch (action.type) {
+    case FETCH_WEATHER:
+    // mutative
+      return state.push(action.payload.data);
+  }
+  return state;
+}
+```
+
+```js
+// GOOD :)
+export default function(state = [], action) {
+
+  switch (action.type) {
+    case FETCH_WEATHER:
+    // non-mutative
+      return state.concat([action.payload.data]);
+  }
+  return state;
+}
+```
