@@ -73,7 +73,7 @@ HOW ?
 - A smart / class-based component, which makes use of the state via ```this.props```.
 - A [state-mapping function](#state-mapping-function), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
 - Finally - a call to **connect**
-  - ```export default connect(stateFunction)(mySmartComponent)```
+  - ```export default connect(mapStateToProps)(mySmartComponent)```
 
 The redux (state) and react (views) libraries are disconnected and independent of one another, and it is only through **react-redux** that they become connected and collaborative.
 
@@ -143,9 +143,7 @@ export default connect(mapStateToProps)(BookList)
 
 ```
 
-#### IMPORTANT:
-
-- Redux state is accessed within a container using ```this.props...```
+Redux state is accessed within a container using ```this.props...```
 
 Similarly to React smart components, whenever our application state changes, our container will re-render, and cause all child components to re-render also.
 
@@ -154,26 +152,27 @@ Actions and Action Creators
 
 An Action, is an object that describes a user interaction that should change the state. For example, selecting a book from a list by clicking on it. Here, the user interaction (clicking a book item) triggers the action (selecting a book).
 
-Actions and Action Creators are used for changing state.
+**Actions and Action Creators are used for changing state.**
 
-An action creator is a function that returns an object (which is the action). That action object contains a 'type' property, which describes the action being triggered, as well as any specific data relating to the action:
+An action creator is a function that returns an object (which is the action). That action object contains a 'type' property, which describes the action being triggered. The action object may also optionally contain additional information providing context or details relating to the action:
 
 ```js
 // action creator, triggered by user events.
-function() {
+function selectBook(book) {
+  // selectBook is an action creator that needs to return an action;
+  // an object with a type property
   return {
     type: 'BOOK_SELECTED',
-    book: {title: 'Harry Potter'}
+    payload: book
   }
 }
 ```
-
 
 ```js
 // action object
 {
   type: 'BOOK_SELECTED',
-  book: {title: 'Harry Potter'}
+  payload: {title: 'Harry Potter'}
 }
 ```
 The action object, returned by the action creator is passed through all reducers, which update the state according to the nature and contents of the action.
