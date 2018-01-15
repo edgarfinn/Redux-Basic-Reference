@@ -65,13 +65,29 @@ React vs Redux
     React and Redux are two separate libraries, and its only through a third library called [React-Redux](https://github.com/reactjs/react-redux) that we can combine the two, thereby creating a react component, which is aware of the state stored in Redux.
 
 - #### Actions and Action Creators    
+    In short, Actions and Action Creators are used for changing state.
 
-    An Action, is an object that describes a user interaction that should change the state. An action always contains a ```type``` property, which describes the action being triggered. The action object **might** also contain additional information, providing further context or details relating to the action, which is typically stored inside a ```payload```.
+    An Action, is an object that describes a user event that should change some state. An action always contains a ```type``` property, which describes the action being triggered. If necessary, it **might** also contain additional information, providing further context or details relating to the action, which is typically stored inside a ```payload```.
 
     For example, selecting a book from a list by clicking on it. Here, the user event (clicking a book item) triggers an action creator ( ```selectingBook()```...), which produces an action ```{type: BOOK_SELECTED, payload: {title: 'Eloquent Javascript'}}```.
 
 HOW ?
 ---
+
+#### Redux Data Flow:
+
+- 1) User event triggers an action creator function, possibly also passing info about the data / item on which the event occurred (ie the book being selected).
+
+- 2) The action creator will dispatch an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, used to provide further context of the action (such as the book being selected).
+
+- 3) The action is automatically sent to all reducers, which either respond to the action with an updated state object, or ignore the action, returning the current state, un-mutated.
+
+- 4) All reducers process the action, and return a new state, assembled from all reducers. The new state then notifies containers of any changes.
+
+- 5) Any containers with updated state then re-render, adapting to the new state.
+
+
+
 
 ### Connecting React to Redux:
 #### Ingredients:
@@ -181,17 +197,6 @@ function selectBook(book) {
 ```
 The action object, returned by the action creator is passed through all reducers, which update the state according to the nature and contents of the action.
 
-#### Action data flow:
-
-- 1) User event triggers an action creator function, possibly also passing info about the data / item on which the event occurred (ie the book being selected).
-
-- 2) The action creator will dispatch an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, used to provide further context of the action (such as the book being selected).
-
-- 3) The action is automatically sent to all reducers, which either respond to the action with an updated state object, or ignore the action, returning the current state, un-mutated.
-
-- 4) All reducers process the action, and return a new state, assembled from all reducers. The new state then notifies containers of any changes.
-
-- 5) Any containers with updated state then re-render, adapting to the new state.
 
 Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
 
