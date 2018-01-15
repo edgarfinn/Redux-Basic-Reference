@@ -183,22 +183,27 @@ There are several steps here:
     - and ```{bindActionCreators}``` from redux
 
   - b) Map your state to your container's props using ```connect```.
-    - This is done using a react-redux ```connect()``` invocation; taking a ```mapStateToProps``` function as an argument, and your smart component as a curried argument. The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
-
-      NOTE: Since this returned value becomes your container, this needs to become the ```export default``` instead of the component declaration.
-      ```connect(mapStateToProps)(BookList)```
-    - A mapStateToProps function takes ```state``` as an argument, and return an object that represents that state:
+    - This is done using a react-redux ```connect()``` invocation; taking a ```mapStateToProps``` function as an argument, and your smart component as a curried argument.
 
     ```js
     // whatever is returned from this function will show in the container's props
     const mapStateToProps = (state) => {
       return {
         // whatever key being referenced here
-         // must be defined as as a key in the combineReducers index module
+        // must be defined as as a key in the combineReducers index module
         albums: state.albums
       };
     }
     ```
+
+    The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
+
+      NOTE: Since this returned value becomes your container, this needs to become the ```export default``` instead of the component declaration.
+      ```js
+      export default connect(mapStateToProps)(AlbumList)
+      ```
+    - A mapStateToProps function takes ```state``` as an argument, and return an object that represents that state:
+
 
 
   src/containers/album_list.js
