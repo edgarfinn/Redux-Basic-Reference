@@ -127,15 +127,16 @@ src/reducers/reducer_albums.js
 ```js
 export default () => {
   return [
-    {title: 'Illmatic', artist: 'Nas', released: 1994},
-    {title: '2001', artist: 'Dr Dre', released: 1999},
-    {title: 'The Score', artist: 'Fugees', released: 1996}
+    {title: 'Illmatic', artist: 'Nas', released: '1994'},
+    {title: '2001', artist: 'Dr Dre', released: '1999'},
+    {title: 'The Score', artist: 'Fugees', released: '1996'}
   ]
 }
 ```
 src/reducers/reducer_active_album.js
 
 ```js
+// If no album will initially be selected, initialise state to null to avoid throwing an error
 export default (state = null, action) => {
   switch(action.type) {
     case 'ALBUM_SELECTED':
@@ -179,11 +180,12 @@ There are several steps here:
 
   - a) Import:
     - ``` {connect}``` from react-redux
-    - your action creator(s)
-    - and ```{bindActionCreators}``` from redux
+    - your action creator (in this case ```{ selectAlbum }```)
+    - and ```{ bindActionCreators }``` from redux.
 
   - b) Map your state to your container's props using ```connect```.
     - This is done using a react-redux ```connect()``` invocation; taking a ```mapStateToProps``` function as an argument, and your smart component as a curried argument.
+    - A mapStateToProps function takes ```state``` as an argument, and returns an object that represents that state:
 
     ```js
     // whatever is returned from this function will show in the container's props
@@ -202,7 +204,6 @@ There are several steps here:
       ```js
       export default connect(mapStateToProps)(AlbumList)
       ```
-    - A mapStateToProps function takes ```state``` as an argument, and return an object that represents that state:
 
 
 
@@ -227,6 +228,7 @@ The container is created by taking a class component, and bonding it to the apps
 
 #### State Mapping Function:
 A state-mapping function is written to take ```state``` as an argument, and map a particular value from state to a relevant key in a new object which is returned.
+
 ```js
 
 // receives state as an argument
