@@ -54,15 +54,21 @@ React vs Redux
 
 
 - #### Containers:
-    A container is a smart component that has access to the state that is produced by Redux.
-
-    React and Redux are two separate libraries, and its only through a third library called [React-Redux](https://github.com/reactjs/react-redux) that we can combine the two, thereby creating a react component, which is aware of the state stored in Redux.
+    A container is a smart component that has been given access to the state that is produced by Redux.
 
     You can have multiple containers in one app, but you should only ever make a component a container when you need it to concern itself with a piece of state.
 
     Redux architecture revolves around a strict unidirectional data flow. Downwards data flow is therefore a popular principal, in which only the parent-most component in an application is responsible for fetching data, which can then be passed in a single direction downwards, to its child components.
 
-    In light of the downwards data flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container / smart component. This doesn't always mean the index or app.js module, you may want various child components to be containers as well / instead.
+    In light of this downwards data-flow principal, only the parent-most component that needs to care about a particular piece of state needs to be a container. This doesn't always mean the index or app.js module, you may want various child components to be containers as well / instead.
+
+    React and Redux are two separate libraries, and its only through a third library called [React-Redux](https://github.com/reactjs/react-redux) that we can combine the two, thereby creating a react component, which is aware of the state stored in Redux.
+
+- #### Actions and Action Creators    
+
+    An Action, is an object that describes a user interaction that should change the state. An action always contains a ```type``` property, which describes the action being triggered. The action object **might** also contain additional information, providing further context or details relating to the action, which is typically stored inside a ```payload```.
+
+    For example, selecting a book from a list by clicking on it. Here, the user event (clicking a book item) triggers an action creator ( ```selectingBook()```...), which produces an action ```{type: BOOK_SELECTED, payload: {title: 'Eloquent Javascript'}}```.
 
 HOW ?
 ---
@@ -150,11 +156,9 @@ Similarly to React smart components, whenever our application state changes, our
 Actions and Action Creators
 ---
 
-An Action, is an object that describes a user interaction that should change the state. For example, selecting a book from a list by clicking on it. Here, the user interaction (clicking a book item) triggers the action (selecting a book).
-
 **Actions and Action Creators are used for changing state.**
 
-An action creator is a function that returns an object (which is the action). That action object contains a 'type' property, which describes the action being triggered. The action object may also optionally contain additional information providing context or details relating to the action:
+An action creator is a function that returns an action (object).
 
 ```js
 // action creator, triggered by user events.
@@ -181,7 +185,7 @@ The action object, returned by the action creator is passed through all reducers
 
 - 1) User event triggers an action creator function, possibly also passing info about the data / item on which the event occurred (ie the book being selected).
 
-- 2) The action creator will dispatch an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, which would be used to provide further context of the action (such as the book being selected).
+- 2) The action creator will dispatch an action object, containing a ```type``` key, describing the purpose of the action, and possibly a ```payload``` key, used to provide further context of the action (such as the book being selected).
 
 - 3) The action is automatically sent to all reducers, which either respond to the action with an updated state object, or ignore the action, returning the current state, un-mutated.
 
