@@ -186,14 +186,14 @@ There are several steps here:
     - This is done using a react-redux ```connect()``` invocation; taking a mapStateToProps function as an argument, and your smart component as a curried argument:
       ```connect(mapStateToProps)(BookList)```
     - A mapStateToProps function takes ```state``` as an argument, and return an object that represents that state:
-    
+
     ```js
     // whatever is returned from this function will show in the container's props
     const mapStateToProps = (state) => {
       return {
         // whatever key being referenced here
          // must be defined as as a key in the combineReducers index module
-        books: state.books
+        albums: state.albums
       };
     }
     ```
