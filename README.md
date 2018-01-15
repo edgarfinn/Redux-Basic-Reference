@@ -94,7 +94,7 @@ This set-up guide is based on create-react-app
 $ npm i redux react-redux --save
 ```
 
-1) Place your parent-most component inside a state provider, which will pass redux state **downwards** into your app.
+1) Place your parent-most component inside a Provider Store, which will pass redux state **downwards** into your app. ([READ more about Provider stores here](https://github.com/reactjs/react-redux/blob/master/docs/api.md#provider-store))
 
 src/index.js:
 ```js
@@ -121,7 +121,7 @@ ReactDOM.render(
 registerServiceWorker();
 ```
 
-2) a) Write some reducers to return some initial value for the app's state
+2) a) Write some reducers to provide state to your app
 
 src/reducers/reducer_albums.js
 ```js
@@ -146,6 +146,8 @@ export default (state = null, action) => {
 ```
 
 2) b) ...and combine them into a rootReducer, using redux's ```combineReducers``` method.
+
+src/reducers/index.js
 ```js
 import { combineReducers } from 'redux';
 import AlbumsReducer from './reducer_albums';
@@ -159,7 +161,49 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 ```
+3) Write an action creator:
 
+src/actions/index.js
+```js
+export function selectAlbum(album) {
+  return {
+    type: 'ALBUM_SELECTED',
+    payload: album
+  }
+}
+```
+
+4) Upgrade a smart component to a container to complete the redux data flow.
+
+There are several steps here:
+
+  - a) Import:
+    - ``` {connect}``` from react-redux
+    - your action creator(s)
+    - and ```{bindActionCreators}``` from redux
+
+  - b) Map your state to your container's props using ```connect```.
+    - This is done using a react-redux ```connect()``` invocation; taking a mapStateToProps function as an argument, and your smart component as a curried argument:
+      ```connect(mapStateToProps)(BookList)```
+    - A mapStateToProps function takes ```state``` as an argument, and return an object that represents that state:
+    
+    ```js
+    // whatever is returned from this function will show in the container's props
+    const mapStateToProps = (state) => {
+      return {
+        // whatever key being referenced here
+         // must be defined as as a key in the combineReducers index module
+        books: state.books
+      };
+    }
+    ```
+
+
+  src/containers/album_list.js
+
+    ```js
+
+    ```
 
 #### Ingredients:
 - ```import {connect} from 'react-redux'```
