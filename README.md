@@ -54,7 +54,7 @@ React vs Redux
 
 
 - #### Containers:
-    A container is a smart component that has been given access to the state that is produced by Redux.
+    A container is a smart component that has been given access to the state contained by Redux.
 
     You can have multiple containers in one app, but you should only ever make a component a container when you need it to concern itself with a piece of state.
 
