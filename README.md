@@ -86,10 +86,81 @@ HOW ?
 
 - 5) Any containers with updated state then re-render, adapting to the new state.
 
+### SETUP:
+
+This set-up guide is based on create-react-app
+
+```bash
+$ npm i redux react-redux --save
+```
+
+1) Place your parent-most component inside a state provider, which will pass redux state **downwards** into your app.
+
+src/index.js:
+```js
+// react set-up
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import registerServiceWorker from './registerServiceWorker';
+
+// redux set-up
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+
+const createStoreWithMiddleWare = applyMiddleware()(createStore)
+
+ReactDOM.render(
+  // Pass state down from your reducers into your app
+  <Provider store={createStoreWithMiddleWare(reducers)}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+registerServiceWorker();
+```
+
+2) a) Write some reducers to return some initial value for the app's state
+
+src/reducers/reducer_albums.js
+```js
+export default () => {
+  return [
+    {title: 'Illmatic', artist: 'Nas', released: 1994},
+    {title: '2001', artist: 'Dr Dre', released: 1999},
+    {title: 'The Score', artist: 'Fugees', released: 1996}
+  ]
+}
+```
+src/reducers/reducer_active_album.js
+
+```js
+export default (state = null, action) => {
+  switch(action.type) {
+    case 'ALBUM_SELECTED':
+      return action.payload;
+  }
+  return state;
+}
+```
+
+2) b) ...and combine them into a rootReducer, using redux's ```combineReducers``` method.
+```js
+import { combineReducers } from 'redux';
+import AlbumsReducer from './reducer_albums';
+import ActiveAlbum from './reducer_active_album';
+
+const rootReducer = combineReducers({
+  albums: AlbumsReducer,
+  activeAlbum: ActiveAlbum
+});
+
+export default rootReducer;
+
+```
 
 
-
-### Connecting React to Redux:
 #### Ingredients:
 - ```import {connect} from 'react-redux'```
 - A smart / class-based component, which makes use of the state via ```this.props```.
