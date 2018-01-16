@@ -297,7 +297,7 @@ With our [```activeAlbum``` reducer](#srcreducersindexjs) receiving dispatched a
 ```js
 class AlbumList extends Component {
 // render the title of all albums in this.props.albumz
-// with an onClick handler that triggers selectAlbum,
+// with an onClick handler that triggers the selectAlbum action creator,
 // passing in the 'props.albumz' album object being clicked as an argument
   renderList() {
     return this.props.albumz.map(album => {
