@@ -192,7 +192,7 @@ There are several steps here:
 
   - A mapDispatchToProps function takes ```dispatch``` as an argument, and returns an invocation of ```bindActionCreators```, which takes an object representing your action creators as the first argument, and ```dispatch``` as the second argument.
 
-    Any action creators passed into the ```bindActionCreators``` function will be appear in the container's props.
+    Any action creators passed into the ```bindActionCreators``` function will appear in the container's props.
 
   - The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
 
@@ -243,59 +243,9 @@ The redux (state) and react (views) libraries are disconnected and independent o
 
 A **container** is a normal react component that gets bonded to the applications state via the above process.
 
-The container is created by taking a class component, and bonding it to the apps state using the mapStateToProps function, together with the ```connect``` function.
+The container is created by taking a class component, and bonding it to the apps state using the mapStateToProps function, together with the ```connect``` function. Similarly to React smart components, whenever our application state changes, our container will re-render, and cause all child components to re-render also.
 
-The state-mapping function is used in conjunction with the connect function to pass the state object to the container's props.
-
-```js
-// containers/book-list.js
-import React, {Component} from 'react';
-// connect from react-redux is used together with mapStateToProps
-// to bond the state returned from
-import { connect } from 'react-redux';
-
-class BookList extends Component {
-
-  renderList() {
-    // redux state is accessed using 'this.props'
-    return this.props.books.map((book) => {
-      return (
-        <li key={book.title} className="list-group-item">{book.title}</li>
-      )
-    })
-  }
-
-  render() {
-    return (
-      <ul className="list-group col-sm-4">
-        {this.renderList()}
-      </ul>
-    )
-  }
-}
-
-// STATE-MAPPING FUNCTION
-// whatever is returned from this function will show as props in the BookList container
-const mapStateToProps = (state) => {
-  return {
-    // whatever key being referenced here
-     // must be defined as as a key in the combineReducers index module
-    books: state.books
-  };
-}
-
-
-// here, the connect function uses the mapStateToProps function
-// to bond the state object (returned by the your reducers)
-// to the BookList component's props
-export default connect(mapStateToProps)(BookList)
-// the returned value here is your **container**
-
-```
-
-Redux state is accessed within a container using ```this.props...```
-
-Similarly to React smart components, whenever our application state changes, our container will re-render, and cause all child components to re-render also.
+- Our redux state, and our action creators are now accessed using ```this.props...```
 
 Actions and Action Creators
 ---
@@ -306,12 +256,12 @@ An action creator is a function that returns an action (object).
 
 ```js
 // action creator, triggered by user events.
-function selectBook(book) {
-  // selectBook is an action creator that needs to return an action;
+function selectAlbum(album) {
+  // selectAlbum is an action creator that needs to return an action;
   // an object with a type property
   return {
-    type: 'BOOK_SELECTED',
-    payload: book
+    type: 'ALBUM_SELECTED',
+    payload: album
   }
 }
 ```
@@ -319,54 +269,32 @@ function selectBook(book) {
 ```js
 // action object
 {
-  type: 'BOOK_SELECTED',
-  payload: {title: 'Harry Potter'}
+  type: 'ALBUM_SELECTED',
+  payload: {title: 'Illmatic', artist: 'Nas', released: '1994'}
 }
 ```
-The action object, returned by the action creator is passed through all reducers, which update the state according to the nature and contents of the action.
-
+The action object, returned by the action creator is passed through any middleware, and then all reducers, which update the state according to the nature and contents of the action.
 
 Using a switch statement, you can determine the state that is returned, based on the type of any action it is passed.
 
 
 ```js
 
-switch(action) {
-  case BOOK_SELECTED:
-  return action.book
-  default:
-  // ignore this action and just return the currentState (unchanged)
-  return currentState  
+// If no album will initially be selected, initialise state to null to avoid throwing an error
+export default (state = null, action) => {
+  switch(action.type) {
+    case 'ALBUM_SELECTED':
+      return action.payload;
+  }
+  // if action is not relevant, return state unchanged.
+  return state;
 }
 
 ```
 
-In order to trigger actions from user interactions or other ongoing events, you need to import the action, and map it to your containers props (similarly to mapping state to props), using redux's ```bindActionCreators``` function.
+With our ```activeAlbum``` reducer receiving dispatched actions, we can create an event handler to trigger our ```selectAlbum``` action creator:
 
-This ```bindActionCreators``` function is used to make sure the action flows through all the application's reducers.
 
-```js
-import { selectBook } from '../actions/index';
-import { bindActionCreators } from 'redux';
-```
-
-Once imported, you then need to write a mapping function, that takes an object
-
-WRITE NOTES ON Upgrading a smart component to a container, and the action reducers data flow setup, using:
-
-```js
-mapStateToProps
-```
-```js
-mapDispatchToProps
-```
-```js
-connected
-```
-
-```js
-bindActionCreators
-```
 
 - Middleware
 
