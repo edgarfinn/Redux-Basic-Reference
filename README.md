@@ -95,7 +95,7 @@ This set-up guide is based on create-react-app
 
 2) Place your parent-most component inside a Provider Store, which will pass redux state **downwards** into your app. ([READ more about Provider stores here](https://github.com/reactjs/react-redux/blob/master/docs/api.md#provider-store))
 
-src/index.js:
+#### src/index.js:
 ```js
 // react set-up
 import React from 'react';
@@ -122,7 +122,7 @@ registerServiceWorker();
 
 3) a) Write some reducers to provide state to your app
 
-src/reducers/reducer_albums.js
+#### src/reducers/reducer_albums.js
 ```js
 export default () => {
   return [
@@ -132,7 +132,7 @@ export default () => {
   ]
 }
 ```
-src/reducers/reducer_active_album.js
+#### src/reducers/reducer_active_album.js
 
 ```js
 // If no album will initially be selected, initialise state to null to avoid throwing an error
@@ -147,7 +147,7 @@ export default (state = null, action) => {
 
 3) b) ...and combine them into a rootReducer, using redux's ```combineReducers``` method.
 
-src/reducers/index.js
+#### src/reducers/index.js
 ```js
 import { combineReducers } from 'redux';
 import AlbumsReducer from './reducer_albums';
@@ -163,7 +163,7 @@ export default rootReducer;
 ```
 4) Write an action creator:
 
-src/actions/index.js
+#### src/actions/index.js
 ```js
 export function selectAlbum(album) {
   return {
@@ -200,7 +200,7 @@ There are several steps here:
 
 
 
-  src/containers/album_list.js
+#### src/containers/album_list.js
 
 ```js
 import React, {Component} from 'react';
@@ -292,8 +292,37 @@ export default (state = null, action) => {
 
 ```
 
-With our ```activeAlbum``` reducer receiving dispatched actions, we can create an event handler to trigger our ```selectAlbum``` action creator:
+With our ```activeAlbum``` reducer receiving dispatched actions, and forwarding state to our containers, we can create an event handler to trigger our ```selectAlbum``` action creator:
 
+```js
+class AlbumList extends Component {
+// render the title of all albums in this.props.albumz
+// with an onClick handler that triggers selectAlbum,
+// passing in the 'props.albumz' album object being clicked as an argument
+  renderList() {
+    return this.props.albumz.map(album => {
+      return (
+        <li
+          key={album.title}
+          onClick={() => { this.props.selectAlbum(album)} }>
+          {album.title}
+        </li>
+      )
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {/* render the list of albums */}
+          {this.renderList()}
+        </ul>
+      </div>
+    )
+  }
+}
+```
 
 
 - Middleware
