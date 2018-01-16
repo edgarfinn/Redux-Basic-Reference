@@ -369,6 +369,8 @@ export default connect(mapStateToprops)(AlbumDetail)
 
 - Now that active album is no longer null, the selected album's details are rendered by the AlbumDetail container.
 
+You can clone, run ```npm install```, and ```npm start``` [this repository](https://github.com/edgarfinn/redux-data-flow-demo) to see a working example of this cycle of actions, reducers and state.
+
 Middleware
 ---
 
