@@ -292,7 +292,9 @@ export default (state = null, action) => {
 
 ```
 
-With our [```activeAlbum``` reducer](#srcreducersindexjs) receiving dispatched actions, and forwarding state to our containers, we can create an event handler to trigger our ```selectAlbum``` action creator:
+With our [```activeAlbum``` reducer](#srcreducersindexjs) receiving dispatched actions, and forwarding state to our containers, we can create an event handler to trigger our ```selectAlbum``` action creator, passing an ```ALBUM_SELECTED``` action through our reducers:
+
+#### src/containers/album_list.js
 
 ```js
 class AlbumList extends Component {
@@ -322,6 +324,42 @@ class AlbumList extends Component {
     )
   }
 }
+```
+Once an album is then clicked, is will appear in the redux's ```activeAlbum``` state property, so now we can write a new container to render according to the activeAlbum currently selected.
+
+REMEMBER - we initiated activeAlbum state property to null, so can only ask react to render details of an activeAlbum once one has been selected.
+
+#### src/containers/album_detail.js
+```js
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+class AlbumDetail extends Component {
+  render() {
+    if (!this.props.album) {
+      return (
+        <div>
+          Click on an album title to view details
+        </div>
+      )
+    }
+    return (
+      <div>
+        <h3>Details for: {this.props.album.title}</h3>
+        <p>By: {this.props.album.artist}</p>
+        <p>Released: {this.props.album.released}</p>
+      </div>
+    )
+  }
+}
+
+const mapStateToprops = (state) => {
+  return {
+    album: state.activeAlbum
+  }
+}
+// mapStateToprops is always the first argument, so just one arg passed in will be interpretted as mapStateToprops
+export default connect(mapStateToprops)(AlbumDetail)
 ```
 
 
