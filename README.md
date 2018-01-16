@@ -292,7 +292,7 @@ export default (state = null, action) => {
 
 ```
 
-With our ```activeAlbum``` reducer receiving dispatched actions, and forwarding state to our containers, we can create an event handler to trigger our ```selectAlbum``` action creator:
+With our [```activeAlbum``` reducer](#srcreducersindexjs) receiving dispatched actions, and forwarding state to our containers, we can create an event handler to trigger our ```selectAlbum``` action creator:
 
 ```js
 class AlbumList extends Component {
