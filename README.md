@@ -362,14 +362,17 @@ const mapStateToprops = (state) => {
 export default connect(mapStateToprops)(AlbumDetail)
 ```
 
-On initial loading of the page, no album is selected, therefore ```state.activeAlbum``` is initialised to null. Once an album is clicked and selected, the selectAlbum action creator dispatches an action (```type: 'ALBUM_SELECTED'```) which is read by all reducers. The activeAlbum reducer responds by setting the active album state property to the value of the selected album.
+- On initial loading of the page, no album is selected, therefore ```state.activeAlbum``` is initialised to null. So AlbumDetail renders the "Click on an album..." call-to-action.
+- Once an album is clicked and selected, the selectAlbum action creator dispatches an action (```type: 'ALBUM_SELECTED'```) which is read by all reducers.
 
-Now that active album is no longer null, the selected album's details are rendered by the AlbumDetail container.
+- The activeAlbum reducer responds by setting the active album state property to the value of the selected album, and re-distributes state back into all containers, causing them to re-render.
 
+- Now that active album is no longer null, the selected album's details are rendered by the AlbumDetail container.
 
-- Middleware
+Middleware
+---
 
-  Redux-Promise package takes promisified ajax responses, and intervenes between the action and the reducer. If the action payload is a promise, it converts it into the response data value, and passes that data on to the reducer instead of the promise.
+Redux-Promise package takes promisified ajax responses, and intervenes between the action and the reducer. If the action payload is a promise, it converts it into the response data value, and passes that data on to the reducer instead of the promise.
 
 ### Avoid State Mutations in Reducers
 Never mutate state in your reducers, instead, return a completely new piece of state.
