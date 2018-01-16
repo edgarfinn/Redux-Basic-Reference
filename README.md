@@ -90,11 +90,10 @@ HOW ?
 
 This set-up guide is based on create-react-app
 
-```bash
-$ npm i redux react-redux --save
-```
+1) ```$ npm i redux react-redux --save```
 
-1) Place your parent-most component inside a Provider Store, which will pass redux state **downwards** into your app. ([READ more about Provider stores here](https://github.com/reactjs/react-redux/blob/master/docs/api.md#provider-store))
+
+2) Place your parent-most component inside a Provider Store, which will pass redux state **downwards** into your app. ([READ more about Provider stores here](https://github.com/reactjs/react-redux/blob/master/docs/api.md#provider-store))
 
 src/index.js:
 ```js
@@ -121,7 +120,7 @@ ReactDOM.render(
 registerServiceWorker();
 ```
 
-2) a) Write some reducers to provide state to your app
+3) a) Write some reducers to provide state to your app
 
 src/reducers/reducer_albums.js
 ```js
@@ -146,7 +145,7 @@ export default (state = null, action) => {
 }
 ```
 
-2) b) ...and combine them into a rootReducer, using redux's ```combineReducers``` method.
+3) b) ...and combine them into a rootReducer, using redux's ```combineReducers``` method.
 
 src/reducers/index.js
 ```js
@@ -162,7 +161,7 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 ```
-3) Write an action creator:
+4) Write an action creator:
 
 src/actions/index.js
 ```js
@@ -174,7 +173,7 @@ export function selectAlbum(album) {
 }
 ```
 
-4) Upgrade a smart component to a container to complete the redux data flow.
+5) Upgrade your smart component to a container to complete the redux data flow.
 
 There are several steps here:
 
@@ -193,7 +192,7 @@ There are several steps here:
 
   - A mapDispatchToProps function takes ```dispatch``` as an argument, and returns an invocation of ```bindActionCreators```, which takes an object representing your action creators as the first argument, and ```dispatch``` as the second argument.
 
-  Any action creators passed into the bindActionCreators function will be appear in the container's props. 
+  Any action creators passed into the bindActionCreators function will be appear in the container's props.
 
   - The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
 
