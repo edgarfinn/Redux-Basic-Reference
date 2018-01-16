@@ -183,64 +183,69 @@ There are several steps here:
     - your action creator (in this case ```{ selectAlbum }```)
     - and ```{ bindActionCreators }``` from redux.
 
-  - b) Map your state to your container's props using ```connect```.
-    - This is done using a react-redux ```connect()``` invocation; taking a ```mapStateToProps``` function as an argument, and your smart component as a curried argument.
-    ```js
-    export default connect(mapStateToProps)(AlbumList)
-    ```
-    - A mapStateToProps function takes ```state``` as an argument, and returns an object that represents that state:
+  - b) Invoke connect, passing it
+      - 1) a ```mapStateToProps``` function as the **first** argument.
+      - 2) a ```mapDispatchToProps``` function as the **second** argument.
+      - 3) your smart component as a **curried** argument.
 
-    ```js
-    // whatever is returned from this function will show in the container's props
-    const mapStateToProps = (state) => {
-      return {
-        // whatever key being referenced here
-        // must be defined as as a key in the combineReducers index module
-        albums: state.albums
-      };
-    }
-    ```
 
-    The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
+  - A mapStateToProps function takes ```state``` as an argument, and returns an object that represents that state. The key used in this object will be the key that references that bit of state in props.
 
-      NOTE: Since this returned value becomes your container, this needs to become the ```export default``` instead of the component declaration.
+  - A mapDispatchToProps function takes ```dispatch``` as an argument, and returns an invocation of ```bindActionCreators```, which takes an object representing your action creators as the first argument, and ```dispatch``` as the second argument.
+
+  Any action creators passed into the bindActionCreators function will be appear in the container's props. 
+
+  - The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
+
+    NOTE: Since this returned value becomes your container, this needs to become the ```export default``` instead of the component declaration.
 
 
 
   src/containers/album_list.js
 
-    ```js
+```js
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
 
-    ```
+import { selectAlbum } from '../actions/index';
 
-#### Ingredients:
-- ```import {connect} from 'react-redux'```
-- A smart / class-based component, which makes use of the state via ```this.props```.
-- A [state-mapping function](#state-mapping-function), which takes an argument 'state' and returns an object which represents some state ({books: state.books}).
-- Finally - a call to **connect**
-  - ```export default connect(mapStateToProps)(mySmartComponent)```
+class AlbumList extends Component {
+  render() {
+    return (
+      <div>
+        <ul>
+          <li>{this.props.albumz[0].title}</li>
+          {/* 'Illmatic' */}
+        </ul>
+      </div>
+    )
+  }
+}
+
+// used to pass state to connect, which maps redux state to containers props
+const mapStateToprops = (state) => {
+  return {
+    albumz: state.albums
+  }
+}
+
+// 'dispatch' = your actions being distributed through reducers
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({selectAlbum: selectAlbum}, dispatch)
+}
+
+export default connect(mapStateToprops,mapDispatchToProps)(AlbumList)
+
+
+```
 
 The redux (state) and react (views) libraries are disconnected and independent of one another, and it is only through **react-redux** that they become connected and collaborative.
 
 A **container** is a normal react component that gets bonded to the applications state via the above process.
 
-The container is created by taking a class component, and bonding it to the apps state using the state mapping function, together with the ```connect``` function imported from 'react-redux' module.
+The container is created by taking a class component, and bonding it to the apps state using the mapStateToProps function, together with the ```connect``` function.
 
-#### State Mapping Function:
-A state-mapping function is written to take ```state``` as an argument, and map a particular value from state to a relevant key in a new object which is returned.
-
-```js
-
-// receives state as an argument
-const mapStateToProps = (state) => {
-  // returns a new object...
-  return {
-    // ...which has a particular value from state
-    // assigned to a sensible key reference
-    books: state.books
-  };
-}
-```
 The state-mapping function is used in conjunction with the connect function to pass the state object to the container's props.
 
 ```js
