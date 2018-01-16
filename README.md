@@ -192,7 +192,7 @@ There are several steps here:
 
   - A mapDispatchToProps function takes ```dispatch``` as an argument, and returns an invocation of ```bindActionCreators```, which takes an object representing your action creators as the first argument, and ```dispatch``` as the second argument.
 
-    Any action creators passed into the bindActionCreators function will be appear in the container's props.
+    Any action creators passed into the ```bindActionCreators``` function will be appear in the container's props.
 
   - The Connect function essentially connects a react component to the redux store. It does not modify the component, but returns a new, connected component class for you to use, which is your **container**.
 
