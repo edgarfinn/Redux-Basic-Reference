@@ -307,7 +307,7 @@ class AlbumList extends Component {
         <li
           key={album.title}
           onClick={() => { this.props.selectAlbum(album)} }>
-          {album.title}
+          <h4>{album.title}</h4>
         </li>
       )
     })
@@ -361,6 +361,10 @@ const mapStateToprops = (state) => {
 // mapStateToprops is always the first argument, so just one arg passed in will be interpretted as mapStateToprops
 export default connect(mapStateToprops)(AlbumDetail)
 ```
+
+On initial loading of the page, no album is selected, therefore ```state.activeAlbum``` is initialised to null. Once an album is clicked and selected, the selectAlbum action creator dispatches an action (```type: 'ALBUM_SELECTED'```) which is read by all reducers. The activeAlbum reducer responds by setting the active album state property to the value of the selected album.
+
+Now that active album is no longer null, the selected album's details are rendered by the AlbumDetail container.
 
 
 - Middleware
