@@ -282,6 +282,8 @@ export default connect(mapStateToprops,mapDispatchToProps)(AlbumList)
 
 ```
 
+This shorter technique is fine as long as your action creator is simply being invoked directly without any additional calculations or manipulations. So in some cases, you may still want to use ```bindActionCreators``` to ```mapDispatchToProps```, depending on exactly how the action creator will be invoked.
+
 Actions and Action Creators
 ---
 
