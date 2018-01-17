@@ -247,6 +247,41 @@ The container is created by taking a class component, and bonding it to the apps
 
 - Our redux state, and our action creators are now accessed using ```this.props...```
 
+### TIP:
+
+Alternatively to writing out a mapDispatchToProps function to return an action creator in an object, and passing this function into connect, you can sometimes shorten your code by passing your action creator object straight in to connect as the second argument like so:
+
+
+```js
+
+const mapStateToprops = (state) => {
+  return {
+    albumz: state.albums
+  }
+}
+
+export default connect(mapStateToprops,{ selectAlbum })(AlbumList)
+
+```
+
+...is effectively the same as...
+
+```js
+
+const mapStateToprops = (state) => {
+  return {
+    albumz: state.albums
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({selectAlbum: selectAlbum}, dispatch)
+}
+
+export default connect(mapStateToprops,mapDispatchToProps)(AlbumList)
+
+```
+
 Actions and Action Creators
 ---
 
